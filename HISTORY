@@ -1,5 +1,9 @@
 === CURRENT
 
+=== 0.5.6.1 2023-10-05
+
+* Replace alias_method_chain with prepend
+
 === 0.5.6 2021-04-02
 
 * Add metadata to Gemspec file
