@@ -9,17 +9,20 @@ end
 
 module ActionController
   class Base
+    module ProcessWithOauth
+      def process(request, response=nil)
+        request.apply_oauth! if request.respond_to?(:apply_oauth!)
+        super(request, response)
+      end
+    end
+
     if defined? ActionDispatch
       def process_with_new_base_test(request, response=nil)
         request.apply_oauth! if request.respond_to?(:apply_oauth!)
         super(request, response)
       end
     else
-      def process_with_oauth(request, response=nil)
-        request.apply_oauth! if request.respond_to?(:apply_oauth!)
-        process_without_oauth(request, response)
-      end
-      alias_method_chain :process, :oauth
+      prepend ProcessWithOauth
     end
   end
 
